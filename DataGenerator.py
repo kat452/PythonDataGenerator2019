@@ -22,7 +22,7 @@ inputStream = "ExampleInputStream"
 '#hotspotWeight = 0.2  # The fraction ofpoints that are draw from the hotspots'
 
 
-'#measurementTime = str(datetime.now())'
+'measurementTime = str(datetime.now())'
 
 
 '#xyz are randomized'
