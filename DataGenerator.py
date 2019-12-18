@@ -6,10 +6,13 @@ import datetime
 from random import random
 
 # Modify this section to reflect your AWS configuration.
+#TODO need to configure these securely
 awsRegion = ""  # The AWS region where your Kinesis Analytics application is configured.
 accessKeyId = ""  # Your AWS Access Key ID
 secretAccessKey = ""  # Your AWS Secret Access Key
 inputStream = "ExampleInputStream"
+
+
 '# The name of the stream being used as input into the Kinesis Analytics hotspots application'
 
 '# Variables that control properties of the generated data.'
@@ -39,7 +42,7 @@ def generate_random_gyro_details(xgyro_min, xgryo_max, ygyro_min, ygyro_max, zgy
         'device_model': "Apple watch",
         'system_name': "watchOS",
         'system_version': "6.1.1",
-
+        #TODO add date into this
         'source_type': "raw",
         'data_type': "gyro",
         'xgyro': xgyro_min + random(),
@@ -106,7 +109,7 @@ def main():
     kinesis = boto3.client('kinesis')
 
     generator = RecordGenerator()
-    batch_size = 100
+    batch_size = 1
     '#This was changed because of request for batch size of 100'
 
     while True:
@@ -114,7 +117,7 @@ def main():
         print(records)
        # kinesis.put_records(StreamName="ExampleInputStream", Records=records)    # TODO change to kinesis stream name
 
-        time.sleep(0.1)
+        time.sleep(0.1) #in seconds
         '#TODO the combination of time.sleep and batch size will determine how many in a minute, '
         '#and how they are spaced out'
 
