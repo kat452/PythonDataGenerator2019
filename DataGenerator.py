@@ -34,8 +34,6 @@ ygyro_Range = [0, 1]
 zgyro_Range = [0, 1]
 
 
-
-
 def generate_random_gyro_details(xgyro_min, xgryo_max, ygyro_min, ygyro_max, zgyro_min, zgyro_max):
     """Generate values between 0 and 1 ."""
     return {
@@ -43,6 +41,7 @@ def generate_random_gyro_details(xgyro_min, xgryo_max, ygyro_min, ygyro_max, zgy
         'system_name': "watchOS",
         'system_version': "6.1.1",
         #TODO add date into this
+        'measurement_time': str(datetime.datetime.today()),
         'source_type': "raw",
         'data_type': "gyro",
         'xgyro': xgyro_min + random(),
@@ -53,8 +52,6 @@ def generate_random_gyro_details(xgyro_min, xgryo_max, ygyro_min, ygyro_max, zgy
         'phone_unique_id': "678328B8-E1A4-4DF4-B0FB-38673C77B70F",
         'watch_unique_id': "37C6FA39-C85B-4018-9D03-0B012BE67828",
         'app_version': "1.0.3"
-
-
     }
 
 
