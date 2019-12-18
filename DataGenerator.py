@@ -17,9 +17,20 @@ hotspotSideLength = 1  # The side length of the hotspot
 hotspotWeight = 0.2  # The fraction ofpoints that are draw from the hotspots
 device_model = "Apple watch"
 system_name = "watchOS"
+system_version = "6.1.1"
+#measurementTime changes
+source_type = "raw"
+data_type = "gyro"
 
 
+#xyz are randomized
+x_gyroRange = [0, 1]
+y_gyroRange = [0, 1]
+z_gyroRange = [0, 1]
 
+study_type = "meal_study"
+subject_id = "7ba82a44-7c79-4d6f-94cf-5bfd678db34b"
+subject
 
 def generate_point_in_rectangle(x_min, width, y_min, height):
     """Generate points uniformly in the given rectangle."""
