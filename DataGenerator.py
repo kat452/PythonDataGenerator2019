@@ -59,8 +59,9 @@ class RecordGenerator(object):
         self.xgyro_min = xgyro_Range[0]
         self.xgyro_max = xgyro_Range[1]
         self.ygyro_min = ygyro_Range[0]
+        self.ygyro_max = ygyro_Range[1]
         self.zgyro_min = zgyro_Range[0]
-
+        self.zgyro_max = zgyro_Range[1]
        """self.x_min = xRange[0]
         self.width = xRange[1] - xRange[0]
         self.y_min = yRange[0]
@@ -70,31 +71,23 @@ class RecordGenerator(object):
         self.hotspot_y_min = None"""
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     def get_record(self):
-        if self.points_generated % 1000 == 0:
-            self.update_hotspot()
+        #in the original code this had to do with changing starting info on position every so many "points"
 
-        if random() < hotspotWeight:
+        """if self.points_generated % 1000 == 0:
+            self.update_hotspot()"""
+        record = generate_random_gyro_details(self.xgyro_min,self.xgyro_max,self.ygyro_min,self.ygyro_max,self.zgyro_min,self.zgyro_max)
+
+
+        """if random() < hotspotWeight:
             record = generate_point_in_rectangle(self.hotspot_x_min, hotspotSideLength, self.hotspot_y_min,
                                                  hotspotSideLength)
             record['is_hot'] = 'Y'
         else:
             record = generate_point_in_rectangle(self.x_min, self.width, self.y_min, self.height)
-            record['is_hot'] = 'N'
+            record['is_hot'] = 'N' """
 
-        self.points_generated += 1
+        #self.points_generated += 1
         data = json.dumps(record)
         return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
 
