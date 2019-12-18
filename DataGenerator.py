@@ -5,13 +5,14 @@ import datetime
 import config
 '#modified from tutorial at https://docs.aws.amazon.com/kinesisanalytics/latest/dev/app-hotspots-prepare.html'
 from random import random
-#cognito= boto3.client('cognito-identity')
-#response = cognito.get_credentials_for_identity(IdentityId="us-east-1_uskfYSSa6")
+"""cognito= boto3.client('cognito-identity')'
+#response = cognito.get_credentials_for_identity(IdentityId="us-east-1_uskfYSSa6")"""
 # Modify this section to reflect your AWS configuration.
 awsRegion = "us-east-1"  # The AWS region where your Kinesis Analytics application is configured.
 accessKeyId = config.accessKeyId  # Your AWS Access Key ID
 secretAccessKey = config.secretAccessKey  # Your AWS Secret Access Key
 inputStream = "test"
+
 '# The name of the stream being used as input into the Kinesis Analytics hotspots application'
 
 '# Variables that control properties of the generated data.'
@@ -99,7 +100,7 @@ class RecordGenerator(object):
 
 
 def main():
-    kinesis = boto3.client('kinesis')
+    kinesis = boto3.client('kinesis', aws_access_key_id=accessKeyId, aws_secret_access_key=secretAccessKey)
 
     generator = RecordGenerator()
     batch_size = 1
