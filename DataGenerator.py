@@ -2,14 +2,15 @@ import boto3
 import json
 import time
 import datetime
+import config
 '#modified from tutorial at https://docs.aws.amazon.com/kinesisanalytics/latest/dev/app-hotspots-prepare.html'
 from random import random
 #cognito= boto3.client('cognito-identity')
 #response = cognito.get_credentials_for_identity(IdentityId="us-east-1_uskfYSSa6")
 # Modify this section to reflect your AWS configuration.
 awsRegion = "us-east-1"  # The AWS region where your Kinesis Analytics application is configured.
-accessKeyId = ""  # Your AWS Access Key ID
-secretAccessKey = ""  # Your AWS Secret Access Key
+accessKeyId = config.accessKeyId  # Your AWS Access Key ID
+secretAccessKey = config.secretAccessKey  # Your AWS Secret Access Key
 inputStream = "test"
 '# The name of the stream being used as input into the Kinesis Analytics hotspots application'
 
