@@ -110,15 +110,15 @@ def main():
     kinesis = boto3.client('kinesis')
 
     generator = RecordGenerator()
-    batch_size = 10
+    batch_size = 100  #This was changed because of request for batch size of 100
 
     while True:
         records = generator.get_records(batch_size)
         print(records)
-        kinesis.put_records(StreamName="ExampleInputStream", Records=records)
+        kinesis.put_records(StreamName="ExampleInputStream", Records=records)    # TODO change to kinesis stream name
 
         time.sleep(0.1)
-
+        #TODO the combination of time.sleep and batch size will determine how many in a minute, and how they're spaced out
 
 if __name__ == "__main__":
     main()
