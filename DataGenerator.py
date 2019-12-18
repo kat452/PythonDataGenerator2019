@@ -1,6 +1,7 @@
 import boto3
 import json
 import time
+import datetime
 #modified from tutorial at https://docs.aws.amazon.com/kinesisanalytics/latest/dev/app-hotspots-prepare.html
 from random import random
 
@@ -15,10 +16,12 @@ xRange = [0, 10]  # The range of values taken by the x-coordinate
 yRange = [0, 10]  # The range of values taken by the y-coordinate
 hotspotSideLength = 1  # The side length of the hotspot
 hotspotWeight = 0.2  # The fraction ofpoints that are draw from the hotspots
+datetime
+
 device_model = "Apple watch"
 system_name = "watchOS"
 system_version = "6.1.1"
-#measurementTime changes
+#measurementTime
 source_type = "raw"
 data_type = "gyro"
 
@@ -30,7 +33,9 @@ z_gyroRange = [0, 1]
 
 study_type = "meal_study"
 subject_id = "7ba82a44-7c79-4d6f-94cf-5bfd678db34b"
-subject
+phone_unique_id = "678328B8-E1A4-4DF4-B0FB-38673C77B70F"
+watch_unique_id = "37C6FA39-C85B-4018-9D03-0B012BE67828"
+app_version = "1.0.3"
 
 def generate_point_in_rectangle(x_min, width, y_min, height):
     """Generate points uniformly in the given rectangle."""
