@@ -2,6 +2,9 @@
   <dictionary name="katie">
     <words>
       <w>kinesis</w>
+      <w>xgyro</w>
+      <w>ygyro</w>
+      <w>zgyro</w>
     </words>
   </dictionary>
 </component>
