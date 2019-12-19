@@ -23,13 +23,13 @@ def generate_random_meal():
     }
 
 
-def generate_random_gyro_details(xgyro_min, x_range, ygyro_min, y_range, zgyro_min, z_range, currentTime):
+def generate_random_gyro_details(xgyro_min, x_range, ygyro_min, y_range, zgyro_min, z_range, current_time):
     """Generate values between 0 and 1 ."""
     return {
         'device_model': deviceConfiguration.device_model,
         'system_name': deviceConfiguration.system_name,
         'system_version': deviceConfiguration.system_version,
-        'measurement_time': str(currentTime),
+        'measurement_time': str(current_time),
         'source_type': "raw",
         'data_type': "gyro",
         'xgyro': xgyro_min + random()*x_range,
@@ -43,14 +43,14 @@ def generate_random_gyro_details(xgyro_min, x_range, ygyro_min, y_range, zgyro_m
     }
 
 
-def generate_random_heart_rate(currentTime):
+def generate_random_heart_rate(current_time):
 
     return {
         'device_model': deviceConfiguration.device_model,
         'system_name': deviceConfiguration.system_name,
         'system_version': deviceConfiguration.system_version,
-        'added_to_health': str(currentTime),
-        'data_sync_time': str(currentTime + timedelta(seconds=randint(0, 100))),
+        'added_to_health': str(current_time),
+        'data_sync_time': str(current_time + timedelta(seconds=randint(0, 100))),
         'source_type': "health",
         'data_type': "heart_rate",
         'heart_beat_count': randint(70, 120),
@@ -62,13 +62,13 @@ def generate_random_heart_rate(currentTime):
     }
 
 
-def generate_random_accelerometer_details(currentTime):
+def generate_random_accelerometer_details(current_time):
 
     return{
         'device_model': deviceConfiguration.device_model,
         'system_name': deviceConfiguration.system_name,
         'system_version': deviceConfiguration.system_version,
-        'measurement_time': str(currentTime),
+        'measurement_time': str(current_time),
         'source_type': "raw",
         'data_type': "accelerometer",
         'x_acceleration': -2 + random()*4,
