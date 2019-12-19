@@ -18,24 +18,3 @@ def generate_random_meal():
 
 
 
-{
-
-"device_model":"Apple Watch", "system_name":"watchOS",
-
-"system_version":"6.1",
-
- "source_type":"active",
-
-"data_type":“meal", 
-
-"start_time":"2019-12-02T13:43:41+0000", "stop_time":"2019-12-02T13:43:42+0000", "study_type":"meal_study",
-
-"subject_id":"yashtech",
-
-"phone_unique_id":"678328B8-E1A4-4DF4-B0FB-38673C77B70F",
-
-"watch_unique_id":"37C6FA39-C85B-4018-9D03-0B012BE67828",
-
-"app_version":"1.0“
-
-}
