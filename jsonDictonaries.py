@@ -4,7 +4,7 @@ from datetime import timedelta
 import deviceConfiguration
 
 
-def generate_random_meal_heartrate():
+def generate_random_meal():
 
     return {
         'device_model': deviceConfiguration.device_model,
