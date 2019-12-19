@@ -1,3 +1,3 @@
-accessKeyId = "AKIA5V4LSIMDTLFADAGZ"  # Your AWS Access Key ID
-secretAccessKey = "o9t3Vp1eajFyVGv79aMcmNxIyp3WFU++yzaaCTTi"  # Your AWS Secret Access Key
+accessKeyId =  "AKIA5V4LSIMDYA4G5XVC"
+secretAccessKey = "Zuy2RGafSwCmyDybqwTEU0dP9WcH+NJeReQ2S3rz"
 inputStream = "test"

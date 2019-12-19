@@ -12,24 +12,6 @@ accessKeyId = config.accessKeyId  # Your AWS Access Key ID
 secretAccessKey = config.secretAccessKey  # Your AWS Secret Access Key
 inputStream = "test"
 
-'# The name of the stream being used as input into the Kinesis Analytics hotspots application'
-
-'# Variables that control properties of the generated data.'
-'#xRange = [0, 10]  # The range of values taken by the x-coordinate'
-'#yRange = [0, 10]  # The range of values taken by the y-coordinate'
-'#hotspotSideLength = 1  # The side length of the hotspot'
-'#hotspotWeight = 0.2  # The fraction ofpoints that are draw from the hotspots'
-
-'measurementTime = str(datetime.now())'
-
-'#xyz are randomized'
-'#This needs to be randomized'
-'#xgyro_Range = [0, 1]'
-'#this needs to be randomized'
-'#ygyro_Range = [0, 1]'
-'#this needs to be randomized'
-'#zgyro_Range = [0, 1]'
-
 
 def generate_random_gyro_details(xgyro_min, xgryo_max, ygyro_min, ygyro_max, zgyro_min, zgyro_max):
     """Generate values between 0 and 1 ."""
