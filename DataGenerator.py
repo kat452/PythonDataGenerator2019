@@ -52,6 +52,15 @@ def generate_random_gyro_details(xgyro_min, xgryo_max, ygyro_min, ygyro_max, zgy
     }
 
 
+def generate_random_heart_rate():
+
+    return {
+
+
+
+    }
+
+
 class RecordGenerator(object):
     """A class used to generate points used as input to the hotspot detection algorithm. With probability hotspotWeight,
     a point is drawn from a hotspot, otherwise it is drawn from the base distribution. The location of the hotspot
