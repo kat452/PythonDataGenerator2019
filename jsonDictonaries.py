@@ -2,7 +2,7 @@ from random import random
 import datetime
 
 
-def generate_random_meal():
+def generate_random_meal_heartrate():
 
     return {
         'device_model': "Apple watch",
