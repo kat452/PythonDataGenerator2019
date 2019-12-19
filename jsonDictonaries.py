@@ -1,9 +1,10 @@
 from random import random
-import datetime
+from _datetime import datetime
+from datetime import timedelta
 import deviceConfiguration
 
 
-def generate_random_meal():
+def generate_random_meal_heartrate():
 
     return {
         'device_model': deviceConfiguration.device_model,
@@ -11,8 +12,8 @@ def generate_random_meal():
         'system_version': deviceConfiguration.system_version,
         'source_type': "active",
         'data_type': "meal",
-        'start_time': "2019-12-02T13:43:41+0000", # TODO
-        'stop_time': "2019-12-02T13:43:42+0000",  #TODO
+        'start_time': str(datetime.now() - timedelta(minutes=random*60)),
+        'stop_time': str(datetime.now()),
         'study_type': "meal_study",
         'subject_id': deviceConfiguration.subject_id,
         'phone_unique_id': deviceConfiguration.phone_unique_id,
@@ -47,7 +48,7 @@ def generate_random_heart_rate():
         'device_model': deviceConfiguration.device_model,
         'system_name': deviceConfiguration.system_name,
         'system_version': deviceConfiguration.system_version,
-        'added_to_health': str(datetime.datetime.today()),
+        'added_to_health': str(datetime.today()),
         'source_type': "health",
         'data_type': "heart_rate",
         'heart_beat_count': 70 + random()*50,
@@ -65,7 +66,7 @@ def generate_random_accelerometer_details(xgyro_min, xgryo_max, ygyro_min, ygyro
         'device_model': deviceConfiguration.device_model,
         'system_name': deviceConfiguration.system_name,
         'system_version': deviceConfiguration.system_version,
-        'measurement_time': str(datetime.datetime.today()),
+        'measurement_time': str(datetime.today()),
         'source_type': "raw",
         'data_type': "accelerometer",
         'xgyro': xgyro_min + random()*4,
