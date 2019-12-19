@@ -23,13 +23,13 @@ def generate_random_meal():
     }
 
 
-def generate_random_gyro_details(xgyro_min, x_range, ygyro_min, y_range, zgyro_min, z_range):
+def generate_random_gyro_details(xgyro_min, x_range, ygyro_min, y_range, zgyro_min, z_range, currentTime):
     """Generate values between 0 and 1 ."""
     return {
         'device_model': deviceConfiguration.device_model,
         'system_name': deviceConfiguration.system_name,
         'system_version': deviceConfiguration.system_version,
-        'measurement_time': str(datetime.today()),
+        'measurement_time': str(currentTime),
         'source_type': "raw",
         'data_type': "gyro",
         'xgyro': xgyro_min + random()*x_range,
@@ -43,14 +43,14 @@ def generate_random_gyro_details(xgyro_min, x_range, ygyro_min, y_range, zgyro_m
     }
 
 
-def generate_random_heart_rate():
+def generate_random_heart_rate(currentTime):
 
     return {
         'device_model': deviceConfiguration.device_model,
         'system_name': deviceConfiguration.system_name,
         'system_version': deviceConfiguration.system_version,
-        'added_to_health': str(datetime.today()),
-        'data_sync_time': str(datetime.today() + timedelta(seconds=randint(0, 100))),
+        'added_to_health': str(currentTime),
+        'data_sync_time': str(currentTime + timedelta(seconds=randint(0, 100))),
         'source_type': "health",
         'data_type': "heart_rate",
         'heart_beat_count': 70 + random()*50,
@@ -62,13 +62,13 @@ def generate_random_heart_rate():
     }
 
 
-def generate_random_accelerometer_details():
+def generate_random_accelerometer_details(currentTime):
 
     return{
         'device_model': deviceConfiguration.device_model,
         'system_name': deviceConfiguration.system_name,
         'system_version': deviceConfiguration.system_version,
-        'measurement_time': str(datetime.today()),
+        'measurement_time': str(currentTime),
         'source_type': "raw",
         'data_type': "accelerometer",
         'x_acceleration': -2 + random()*4,

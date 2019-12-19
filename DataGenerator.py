@@ -15,7 +15,7 @@ inputStream = "test"
 
 
 class RecordGenerator(object):
-    '#Ok define attributes of this class'
+    """#Ok define attributes of this class"""
     def __init__(self):
         self.xgyro_min = -2
         self.xgyro_max = +2
@@ -24,19 +24,31 @@ class RecordGenerator(object):
         self.zgyro_min = -2
         self.zgyro_max = +2
 
-    def get_record(self):
+    def get_gyro_records(self, n, current_time):
+        return [self.get_gyro_record(current_time)for _ in range(n)]
 
-        record = jsonDictonaries.generate_random_gyro_details(self.xgyro_min, self.xgyro_max, self.ygyro_min,
-                                                              self.ygyro_max, self.zgyro_min, self.zgyro_max)
-        data = json.dumps(record)
-        record1 = jsonDictonaries.generate_random_meal()
-        data1 = json.dumps(record1)
-        record = jsonDictonaries.generate_random_accelerometer_details()
-        # return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
+    def get_accelerometer_records(self, n, current_time):
+        return [self.get_accelerometer_record(current_time)for _ in range(n)]
+
+    def get_heart_records(self, n, current_time):
+        return [self.get_heart_record(current_time)for _ in range(n)]
+
+    def get_accelerometer_record(self, current_time):
+        accelerometer = jsonDictonaries.generate_random_accelerometer_details(current_time)
+        data = json.dumps(accelerometer)
         return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
 
-    def get_records(self, n):
-        return [self.get_record() for _ in range(n)]
+    def get_gyro_record(self, current_time):
+        gyro = jsonDictonaries.generate_random_gyro_details(self.xgyro_min, self.xgyro_max, self.ygyro_min,
+                                                            self.ygyro_max, self.zgyro_min, self.zgyro_min,
+                                                            current_time)
+        data = json.dumps(gyro)
+        return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
+
+    def get_heart_record(self, current_time):
+        heart = jsonDictonaries.generate_random_heart_rate(current_time)
+        data = json.dumps(heart)
+        return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
 
 
 def main():
@@ -46,7 +58,14 @@ def main():
     '#This was changed because of request for batch size of 100'
 
     while True:
-        records = generator.get_records(batch_size)
+        "# records = generator.get_records(batch_size)"
+        current_time = datetime.datetime.now()
+        """records = generator.get_passive_records(batch_size)"""
+        records = generator.get_gyro_records(batch_size, current_time)
+        print(records)
+        records = generator.get_heart_records(batch_size, current_time)
+        print(records)
+        records = generator.get_accelerometer_records(batch_size, current_time)
         print(records)
         '# kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
 
@@ -58,3 +77,28 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    """
+        def get_record(self):
+
+            record = jsonDictonaries.generate_random_gyro_details(self.xgyro_min, self.xgyro_max, self.ygyro_min,
+                                                                  self.ygyro_max, self.zgyro_min, self.zgyro_max)
+            data = json.dumps(record)
+            record1 = jsonDictonaries.generate_random_meal()
+            data1 = json.dumps(record1)
+            record = jsonDictonaries.generate_random_accelerometer_details()
+            # return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
+            return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
+
+        def get_records(self, n):
+            return [self.get_record() for _ in range(n)]
+    """
+    """   def get_passive_records(self, n):
+            return [self.get_passive_record() for _ in range(n)]"""
+    """def get_passive_record(self):
+        current_time = datetime.datetime.now()
+        acc = self.get_accelerometer_record(current_time)
+        gyro = self.get_gyro_record(current_time)
+        heart = self.get_gyro_record(current_time)
+        return acc, gyro, heart"""
+
