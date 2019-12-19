@@ -2,6 +2,7 @@ from random import random
 from _datetime import datetime
 from datetime import timedelta
 import deviceConfiguration
+from random import randint
 
 
 def generate_random_meal():
@@ -12,7 +13,7 @@ def generate_random_meal():
         'system_version': deviceConfiguration.system_version,
         'source_type': "active",
         'data_type': "meal",
-        'start_time': str(datetime.now() - timedelta(minutes=random*60)),
+        'start_time': str(datetime.now() - timedelta(minutes=randint(0, 60))),
         'stop_time': str(datetime.now()),
         'study_type': "meal_study",
         'subject_id': deviceConfiguration.subject_id,
@@ -49,7 +50,7 @@ def generate_random_heart_rate():
         'system_name': deviceConfiguration.system_name,
         'system_version': deviceConfiguration.system_version,
         'added_to_health': str(datetime.today()),
-        'data_sync_time': str(datetime.today() + timedelta(seconds=random*100)),
+        'data_sync_time': str(datetime.today() + timedelta(seconds=randint(0, 100))),
         'source_type': "health",
         'data_type': "heart_rate",
         'heart_beat_count': 70 + random()*50,
