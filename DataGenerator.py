@@ -31,8 +31,7 @@ class RecordGenerator(object):
         data = json.dumps(record)
         record1 = jsonDictonaries.generate_random_meal()
         data1 = json.dumps(record1)
-        record = jsonDictonaries.generate_random_accelerometer_details(self.xgyro_min, self.xgyro_max, self.ygyro_min,
-                                                                       self.ygyro_max, self.zgyro_min, self.zgyro_max)
+        record = jsonDictonaries.generate_random_accelerometer_details()
         # return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
         return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
 

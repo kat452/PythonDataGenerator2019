@@ -29,7 +29,7 @@ def generate_random_gyro_details(xgyro_min, x_range, ygyro_min, y_range, zgyro_m
         'device_model': deviceConfiguration.device_model,
         'system_name': deviceConfiguration.system_name,
         'system_version': deviceConfiguration.system_version,
-        'measurement_time': str(datetime.datetime.today()),
+        'measurement_time': str(datetime.today()),
         'source_type': "raw",
         'data_type': "gyro",
         'xgyro': xgyro_min + random()*x_range,
