@@ -5,8 +5,7 @@ import datetime
 import config
 '#modified from tutorial at https://docs.aws.amazon.com/kinesisanalytics/latest/dev/app-hotspots-prepare.html'
 from random import random
-"""cognito= boto3.client('cognito-identity')'
-#response = cognito.get_credentials_for_identity(IdentityId="us-east-1_uskfYSSa6")"""
+
 # Modify this section to reflect your AWS configuration.
 awsRegion = "us-east-1"  # The AWS region where your Kinesis Analytics application is configured.
 accessKeyId = config.accessKeyId  # Your AWS Access Key ID
