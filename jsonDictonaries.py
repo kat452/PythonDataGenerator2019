@@ -74,7 +74,7 @@ def generate_random_accelerometer_details():
         'x_acceleration': -2 + random()*4,
         'y_acceleration': -2 + random()*4,
         'z_acceleration': -2 + random()*4,
-        'study_type': "meal_study",
+        'study_type': "accelerometer_study",
         'subject_id': deviceConfiguration.subject_id,
         'phone_unique_id': deviceConfiguration.phone_unique_id,
         'watch_unique_id': deviceConfiguration.watch_unique_id,

@@ -26,14 +26,17 @@ class RecordGenerator(object):
 
     def get_record(self):
 
-        record = jsonDictonaries.generate_random_gyro_details(self.xgyro_min, self.xgyro_max, self.ygyro_min,
-                                                              self.ygyro_max, self.zgyro_min, self.zgyro_max)
-        data = json.dumps(record)
-        record1 = jsonDictonaries.generate_random_meal()
-        data1 = json.dumps(record1)
-        record = jsonDictonaries.generate_random_accelerometer_details()
-        # return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
-        return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
+        gyro_record = jsonDictonaries.generate_random_gyro_details(self.xgyro_min, self.xgyro_max, self.ygyro_min,
+                                                                   self.ygyro_max, self.zgyro_min, self.zgyro_max)
+        gyro_data = json.dumps(gyro_record)
+        meal_record = jsonDictonaries.generate_random_meal_details()
+        meal_data = json.dumps(meal_record)
+        accelerometer_record = jsonDictonaries.generate_random_accelerometer_details()
+        accelerometer_data = json.dumps(accelerometer_record)
+        heart_rate_record = jsonDictonaries.generate_random_heart_rate()
+        hear_rate_data = json.dumps(heart_rate_record)
+        # return {'Data': bytes(meal_data, 'utf-8'), 'PartitionKey': 'partition_key'}
+        return meal_data, accelerometer_data, heart_rate_record, gyro_data
 
     def get_records(self, n):
         return [self.get_record() for _ in range(n)]
