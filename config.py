@@ -1,3 +1,2 @@
 accessKeyId =  ""
 secretAccessKey = ""
-inputStream = ""

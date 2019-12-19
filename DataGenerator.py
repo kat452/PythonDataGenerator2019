@@ -37,7 +37,6 @@ class RecordGenerator(object):
         accelerometer = jsonDictonaries.generate_random_accelerometer_details(current_time)
         data = json.dumps(accelerometer)
         return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
-        """return data"""
 
     def get_gyro_record(self, current_time):
         gyro = jsonDictonaries.generate_random_gyro_details(self.xgyro_min, self.xgyro_max, self.ygyro_min,
@@ -45,16 +44,15 @@ class RecordGenerator(object):
                                                             current_time)
         data = json.dumps(gyro)
         return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
-        """return data"""
+        # return data
 
     def get_heart_record(self, current_time):
         heart = jsonDictonaries.generate_random_heart_rate(current_time)
         data = json.dumps(heart)
         return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
-        """return data"""
 
     def get_meal_record(self):
-        meal = jsonDictonaries.generate_random_meal()
+        meal = jsonDictonaries.generate_random_meal_details()
         data = json.dumps(meal)
         return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
 
@@ -71,18 +69,21 @@ def main():
         """records = generator.get_passive_records(batch_size)"""
         records = generator.get_gyro_records(batch_size, current_time)
         print(records)
+       # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
         records = generator.get_heart_records(batch_size, current_time)
         print(records)
+        # kinesis.put_records(StreamName="test", Records=records)   # TODO change to kinesis stream name'
         records = generator.get_accelerometer_records(batch_size, current_time)
         print(records)
-        '# kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
+       # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
 
-        count= count+1
+        count = count+1
 
         if (count % 1000) == 1:
             records = generator.get_meal_record()
+            print("................. MEAL RECORD.......................")
             print(records)
-
+            # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
         '#in seconds'
         time.sleep(0.1)
         '#TODO the combination of time.sleep and batch size will determine how many in a minute, '
@@ -92,27 +93,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-    """
-        def get_record(self):
-
-            record = jsonDictonaries.generate_random_gyro_details(self.xgyro_min, self.xgyro_max, self.ygyro_min,
-                                                                  self.ygyro_max, self.zgyro_min, self.zgyro_max)
-            data = json.dumps(record)
-            record1 = jsonDictonaries.generate_random_meal()
-            data1 = json.dumps(record1)
-            record = jsonDictonaries.generate_random_accelerometer_details()
-            # return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
-            return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
-
-        def get_records(self, n):
-            return [self.get_record() for _ in range(n)]
-    """
-    """   def get_passive_records(self, n):
-            return [self.get_passive_record() for _ in range(n)]"""
-    """def get_passive_record(self):
-        current_time = datetime.datetime.now()
-        acc = self.get_accelerometer_record(current_time)
-        gyro = self.get_gyro_record(current_time)
-        heart = self.get_gyro_record(current_time)
-        return acc, gyro, heart"""
 

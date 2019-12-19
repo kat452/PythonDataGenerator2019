@@ -5,7 +5,7 @@ import deviceConfiguration
 from random import randint
 
 
-def generate_random_meal():
+def generate_random_meal_details():
 
     return {
         'device_model': deviceConfiguration.device_model,
