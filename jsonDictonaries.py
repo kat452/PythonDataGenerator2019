@@ -53,7 +53,7 @@ def generate_random_heart_rate(currentTime):
         'data_sync_time': str(currentTime + timedelta(seconds=randint(0, 100))),
         'source_type': "health",
         'data_type': "heart_rate",
-        'heart_beat_count': 70 + random()*50,
+        'heart_beat_count': randint(70, 120),
         'study_type': "meal_study",
         'subject_id': deviceConfiguration.subject_id,
         'phone_unique_id': deviceConfiguration.phone_unique_id,

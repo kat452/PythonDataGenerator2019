@@ -36,19 +36,23 @@ class RecordGenerator(object):
     def get_accelerometer_record(self, current_time):
         accelerometer = jsonDictonaries.generate_random_accelerometer_details(current_time)
         data = json.dumps(accelerometer)
-        return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
+        """ return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'} """
+        return data
 
     def get_gyro_record(self, current_time):
         gyro = jsonDictonaries.generate_random_gyro_details(self.xgyro_min, self.xgyro_max, self.ygyro_min,
                                                             self.ygyro_max, self.zgyro_min, self.zgyro_min,
                                                             current_time)
         data = json.dumps(gyro)
-        return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
+        """return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}"""
+        return data
+
 
     def get_heart_record(self, current_time):
         heart = jsonDictonaries.generate_random_heart_rate(current_time)
         data = json.dumps(heart)
-        return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
+        """return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}"""
+        return data
 
 
 def main():
