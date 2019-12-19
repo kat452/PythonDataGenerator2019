@@ -65,13 +65,6 @@ class RecordGenerator(object):
         self.ygyro_max = 1 
         self.zgyro_min = 0
         self.zgyro_max = 1
-        """self.x_min = xRange[0]
-        self.width = xRange[1] - xRange[0]
-        self.y_min = yRange[0]
-        self.height = yRange[1] - yRange[0]
-        self.points_generated = 0
-        self.hotspot_x_min = None
-        self.hotspot_y_min = None"""
 
     def get_record(self):
         """"in the original code this had to do with changing starting info on position every so many "points"""
@@ -79,14 +72,7 @@ class RecordGenerator(object):
             self.update_hotspot()"""
         record = generate_random_gyro_details(
             self.xgyro_min, self.xgyro_max, self.ygyro_min, self.ygyro_max, self.zgyro_min, self.zgyro_max)
-        """if random() < hotspotWeight:
-            record = generate_point_in_rectangle(self.hotspot_x_min, hotspotSideLength, self.hotspot_y_min,
-                                                 hotspotSideLength)
-            record['is_hot'] = 'Y'
-        else:
-            record = generate_point_in_rectangle(self.x_min, self.width, self.y_min, self.height)
-            record['is_hot'] = 'N' 
-        #self.points_generated += 1"""
+
         data = json.dumps(record)
         return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
 
@@ -94,17 +80,12 @@ class RecordGenerator(object):
         return [self.get_record() for _ in range(n)]
 
 
-""" def update_hotspot(self):
-        self.hotspot_x_min = self.x_min + random() * (self.width - hotspotSideLength)
-        self.hotspot_y_min = self.y_min + random() * (self.height - hotspotSideLength) """
-
-
 def main():
     kinesis = boto3.client('kinesis', aws_access_key_id=accessKeyId, aws_secret_access_key=secretAccessKey)
-    #This was changed
+    
     generator = RecordGenerator()
     batch_size = 1
-    '#This was changed because of request for batch size of 100'
+    '#This was changed becausie of request for batch size of 100'
 
     while True:
         records = generator.get_records(batch_size)
