@@ -36,23 +36,27 @@ class RecordGenerator(object):
     def get_accelerometer_record(self, current_time):
         accelerometer = jsonDictonaries.generate_random_accelerometer_details(current_time)
         data = json.dumps(accelerometer)
-        """ return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'} """
-        return data
+        return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
+        """return data"""
 
     def get_gyro_record(self, current_time):
         gyro = jsonDictonaries.generate_random_gyro_details(self.xgyro_min, self.xgyro_max, self.ygyro_min,
                                                             self.ygyro_max, self.zgyro_min, self.zgyro_min,
                                                             current_time)
         data = json.dumps(gyro)
-        """return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}"""
-        return data
-
+        return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
+        """return data"""
 
     def get_heart_record(self, current_time):
         heart = jsonDictonaries.generate_random_heart_rate(current_time)
         data = json.dumps(heart)
-        """return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}"""
-        return data
+        return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
+        """return data"""
+
+    def get_meal_record(self):
+        meal = jsonDictonaries.generate_random_meal()
+        data = json.dumps(meal)
+        return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
 
 
 def main():
@@ -60,7 +64,7 @@ def main():
     generator = RecordGenerator()
     batch_size = 1
     '#This was changed because of request for batch size of 100'
-
+    count = 0
     while True:
         "# records = generator.get_records(batch_size)"
         current_time = datetime.datetime.now()
@@ -72,6 +76,12 @@ def main():
         records = generator.get_accelerometer_records(batch_size, current_time)
         print(records)
         '# kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
+
+        count= count+1
+
+        if (count % 1000) == 1:
+            records = generator.get_meal_record()
+            print(records)
 
         '#in seconds'
         time.sleep(0.1)
