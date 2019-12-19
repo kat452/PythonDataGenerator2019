@@ -3,6 +3,7 @@ import json
 import time
 import datetime
 import config
+import jsonDictonaries
 '#modified from tutorial at https://docs.aws.amazon.com/kinesisanalytics/latest/dev/app-hotspots-prepare.html'
 from random import random
 
