@@ -2,7 +2,8 @@ from random import random
 import datetime
 import deviceConfiguration
 
-def generate_random_meal_heartrate():
+
+def generate_random_meal():
 
     return {
         'device_model': deviceConfiguration.device_model,
@@ -10,8 +11,8 @@ def generate_random_meal_heartrate():
         'system_version': deviceConfiguration.system_version,
         'source_type': "active",
         'data_type': "meal",
-        'start_time': "2019-12-02T13:43:41+0000",
-        'stop_time': "2019-12-02T13:43:42+0000",
+        'start_time': "2019-12-02T13:43:41+0000", # TODO
+        'stop_time': "2019-12-02T13:43:42+0000",  #TODO
         'study_type': "meal_study",
         'subject_id': deviceConfiguration.subject_id,
         'phone_unique_id': deviceConfiguration.phone_unique_id,
@@ -29,9 +30,9 @@ def generate_random_gyro_details(xgyro_min, xgryo_max, ygyro_min, ygyro_max, zgy
         'measurement_time': str(datetime.datetime.today()),
         'source_type': "raw",
         'data_type': "gyro",
-        'xgyro': xgyro_min + random(),
-        'ygyro': ygyro_min + random(),
-        'zgyro': zgyro_min + random(),
+        'xgyro': xgyro_min + random()*4,
+        'ygyro': ygyro_min + random()*4,
+        'zgyro': zgyro_min + random()*4,
         'study_type': "meal_study",
         'subject_id': deviceConfiguration.subject_id,
         'phone_unique_id': deviceConfiguration.phone_unique_id,
@@ -67,9 +68,9 @@ def generate_random_accelerometer_details(xgyro_min, xgryo_max, ygyro_min, ygyro
         'measurement_time': str(datetime.datetime.today()),
         'source_type': "raw",
         'data_type': "accelerometer",
-        'xgyro': xgyro_min + random(),
-        'ygyro': ygyro_min + random(),
-        'zgyro': zgyro_min + random(),
+        'xgyro': xgyro_min + random()*4,
+        'ygyro': ygyro_min + random()*4,
+        'zgyro': zgyro_min + random()*4,
         'study_type': "meal_study",
         'subject_id': deviceConfiguration.subject_id,
         'phone_unique_id': deviceConfiguration.phone_unique_id,

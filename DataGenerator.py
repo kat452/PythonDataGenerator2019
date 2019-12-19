@@ -15,23 +15,14 @@ inputStream = "test"
 
 
 class RecordGenerator(object):
-
-
     '#Ok define attributes of this class'
     def __init__(self):
-        self.xgyro_min = 0
-        self.xgyro_max = 1
-        self.ygyro_min = 0
-        self.ygyro_max = 1 
-        self.zgyro_min = 0
-        self.zgyro_max = 1
-        """self.x_min = xRange[0]
-        self.width = xRange[1] - xRange[0]
-        self.y_min = yRange[0]
-        self.height = yRange[1] - yRange[0]
-        self.points_generated = 0
-        self.hotspot_x_min = None
-        self.hotspot_y_min = None"""
+        self.xgyro_min = -2
+        self.xgyro_max = +2
+        self.ygyro_min = -2
+        self.ygyro_max = +2
+        self.zgyro_min = -2
+        self.zgyro_max = +2
 
     def get_record(self):
 
@@ -41,8 +32,8 @@ class RecordGenerator(object):
         record1 = jsonDictonaries.generate_random_meal()
         data1 = json.dumps(record1)
         record = jsonDictonaries.generate_random_accelerometer_details(self.xgyro_min, self.xgyro_max, self.ygyro_min,
-                                                              self.ygyro_max, self.zgyro_min, self.zgyro_max)
-        #return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
+                                                                       self.ygyro_max, self.zgyro_min, self.zgyro_max)
+        # return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
         return {'Data': bytes(data, 'utf-8'), 'PartitionKey': 'partition_key'}
 
     def get_records(self, n):
