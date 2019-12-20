@@ -63,7 +63,7 @@ class RecordGenerator(object):
 def main():
     kinesis = boto3.client('kinesis', aws_access_key_id=accessKeyId, aws_secret_access_key=secretAccessKey)
     generator = RecordGenerator()
-    batch_size = randint(1, 60)  # TODO get minimum and maximum batch size
+    batch_size = randint(1, 10)  # TODO get minimum and maximum batch size
     heart_batch_size = 3
     '#This was changed because of request for batch size of 100'
     count = 0
@@ -73,65 +73,44 @@ def main():
     heart_count=0;
     heart_random_rate = randint(0, 60)
 
-
-
-
     prev_time_batch_rate =datetime.datetime.now();
     prev_time_heart = datetime.datetime.now();
     while True:
         "# records = generator.get_records(batch_size)"
 
         current_time = datetime.datetime.now()
-        """records = generator.get_passive_records(batch_size)"""
         records = generator.get_gyro_records(batch_size, current_time)
-        '#print(records)'
+        print(records)
         records = generator.get_accelerometer_records(batch_size, current_time)
-        '#print(records)'
+        print(records)
         # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
 
-        sum = sum + 1
-        '#at present if sum/(20) is taken and then a modulus applied to it comparing it to the random heart rate->' \
-        'basically this is weird math i though up while being slightly tired'
-        # print(str(count / (1 / generation_per_second)) + " " + str(heart_random_rate))
-        # print(str(int(count / (1 / generation_per_second)) % heart_random_rate))
-        '#TODO determine what ratio is going to condense count & generation per second to seconds'
-        '#so this 1/generation_per_second is equiv to 20. generates 20 times per second'
-        '#count runs every second so that follows as well'
-        # print(str(prev_time_heart + datetime.timedelta(minutes=1)) + " " + str(datetime.datetime.now()))
         if (prev_time_heart + datetime.timedelta(minutes=1)) < datetime.datetime.now():
             prev_time_heart = datetime.datetime.now()
-        # if (int(heart_count / (1 / (generation_per_second * .001))) % heart_random_rate) == 0:
+            # if (int(heart_count / (1 / (generation_per_second * .001))) % heart_random_rate) == 0:
             current_time = datetime.datetime.now()
             records = generator.get_heart_records(heart_batch_size, current_time)
-            # print(".......... HEART RATE.............")
+            print(".......... HEART RATE.............")
             '#This is basically setting it so at lease once evey minute generates heart rate'
-            # print(records)
+            print(records)
             heart_random_rate = randint(1, 60)
-            heart_count = 0
             # kinesis.put_records(StreamName=inputStream, Records=records)   # TODO change to kinesis stream name'
 
         total = total + batch_size
         # print(total)
         count = count+1
         if (count % 1000) == 1:
-            # for meal record
             records = generator.get_meal_record()
             # print("................. MEAL RECORD.......................")
             # print(records)
             # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
-            # for heart record
-            # print(".......... HEART RATE.............")
-            # print(records)
-            # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
-        '#in seconds'
-        '#if (int(count / (1 / generation_per_second)) % heart_random_rate) == 0:'
-        # print(" ")
-        # print(count / (1 / generation_per_second))
-        # print(" ")
+
+
+        #this is what changes batch rate
         if (prev_time_batch_rate + datetime.timedelta(seconds=1)) < datetime.datetime.now():
             # if (count / (1 / generation_per_second)) == 1:
             prev_time_batch_rate = datetime.datetime.now()
-            batch_size = randint(1, 60)
+            batch_size = randint(1, 10)
             print("batch size is  " + str(batch_size) + " at time " + str(datetime.datetime.now))
         count = count + 1
         heart_count = heart_count + 1
