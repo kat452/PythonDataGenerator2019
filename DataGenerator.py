@@ -4,9 +4,11 @@ import time
 import datetime
 import config
 import jsonDictonaries
+
 '#modified from tutorial at https://docs.aws.amazon.com/kinesisanalytics/latest/dev/app-hotspots-prepare.html'
 from random import random
 from random import randint
+
 # Modify this section to reflect your AWS configuration.
 awsRegion = "us-east-1"  # The AWS region where your Kinesis Analytics application is configured.
 accessKeyId = config.accessKeyId  # Your AWS Access Key ID
@@ -16,6 +18,7 @@ inputStream = "test"
 
 class RecordGenerator(object):
     """#Ok define attributes of this class"""
+
     def __init__(self):
         self.xgyro_min = -2
         self.xgyro_max = +2
@@ -25,13 +28,13 @@ class RecordGenerator(object):
         self.zgyro_max = +2
 
     def get_gyro_records(self, n, current_time):
-        return [self.get_gyro_record(current_time)for _ in range(n)]
+        return [self.get_gyro_record(current_time) for _ in range(n)]
 
     def get_accelerometer_records(self, n, current_time):
-        return [self.get_accelerometer_record(current_time)for _ in range(n)]
+        return [self.get_accelerometer_record(current_time) for _ in range(n)]
 
     def get_heart_records(self, n, current_time):
-        return [self.get_heart_record(current_time)for _ in range(n)]
+        return [self.get_heart_record(current_time) for _ in range(n)]
 
     def get_accelerometer_record(self, current_time):
         accelerometer = jsonDictonaries.generate_random_accelerometer_details(current_time)
@@ -60,28 +63,43 @@ class RecordGenerator(object):
 def main():
     kinesis = boto3.client('kinesis', aws_access_key_id=accessKeyId, aws_secret_access_key=secretAccessKey)
     generator = RecordGenerator()
-    batch_size = 5
+    batch_size = randint(1, 60)  # TODO get minimum and maximum batch size
     heart_batch_size = 3
     '#This was changed because of request for batch size of 100'
     count = 0
     total = 0
     generation_per_second = .05
-
+    sum = 0
     heart_random_rate = randint(0, 60)
     while True:
-
+        "# records = generator.get_records(batch_size)"
         current_time = datetime.datetime.now()
-        # for gyroscope data
+        """records = generator.get_passive_records(batch_size)"""
         records = generator.get_gyro_records(batch_size, current_time)
-       # print(records)
-        # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
-        # for accelerometer data
+        '#print(records)'
         records = generator.get_accelerometer_records(batch_size, current_time)
-       # print(records)
+        '#print(records)'
         # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
-        total = total + batch_size
-       # print(total)
 
+        sum = sum + 1
+        '#at present if sum/(20) is taken and then a modulus applied to it comparing it to the random heart rate->' \
+        'basically this is weird math i though up while being slightly tired'
+        print(str(count / (1 / generation_per_second)) + " " + str(heart_random_rate))
+        print(str(int(count / (1 / generation_per_second)) % heart_random_rate))
+        #TODO determine what ratio is going to condense count & generation per second to seconds
+        '#so this 1/generation_per_second is equiv to 20. generates 20 times per second'
+        '#count runs every second so that follows as well'
+        if (int(count / (1 / generation_per_second)) % heart_random_rate) == 0:
+            current_time = datetime.datetime.now()
+            records = generator.get_heart_records(heart_batch_size, current_time)
+            print(".......... HEART RATE.............")
+            heart_random_rate = randint(0, 60)
+            '#This is basically setting it so at lease once evey minute generates heart rate'
+            print(records)
+            # kinesis.put_records(StreamName=inputStream, Records=records)   # TODO change to kinesis stream name'
+
+        total = total + batch_size
+        # print(total)
         count = count+1
         if (count % 1000) == 1:
             # for meal record
@@ -92,10 +110,13 @@ def main():
             # for heart record
             records = generator.get_heart_records(batch_size, current_time)
             print(".......... HEART RATE.............")
-            print(sum)
             print(records)
             # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
         '#in seconds'
+        '#if (int(count / (1 / generation_per_second)) % heart_random_rate) == 0:'
+        if (count / (1 % generation_per_second)) == 1:
+            batch_size = randint(1, 60)
+        count = count + 1
         time.sleep(generation_per_second)
         # TODO per second send 60 records
 
@@ -105,5 +126,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
