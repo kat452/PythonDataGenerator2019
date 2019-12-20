@@ -65,51 +65,34 @@ def main():
     '#This was changed because of request for batch size of 100'
     count = 0
     total = 0
-    sum = 0
     generation_per_second = .05
 
     heart_random_rate = randint(0, 60)
     while True:
-        "# records = generator.get_records(batch_size)"
+
         current_time = datetime.datetime.now()
-        """records = generator.get_passive_records(batch_size)"""
+        # for gyroscope data
         records = generator.get_gyro_records(batch_size, current_time)
-        #print(records)
-       # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
-
-        if (randint(0, 60) % 10) < 5:
-            records = generator.get_gyro_records(batch_size, current_time)
-            print(records)
-            records = generator.get_accelerometer_records(batch_size, current_time)
-            print(records)
-            # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
-
-        sum = sum + 1
-        if(sum % 1000) == 1:
-                    records = generator.get_heart_records(batch_size, current_time)
-                    print(".......... HEART RATE.............")
-                    print(sum)
-                    print(records)
-        # kinesis.put_records(StreamName="test", Records=records)   # TODO change to kinesis stream name'
+       # print(records)
+        # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
+        # for accelerometer data
         records = generator.get_accelerometer_records(batch_size, current_time)
-        #print(records)
-       # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
-        total = total + 5
-        #print(total)
-        if(sum % heart_random_rate) == 1:
-            records = generator.get_heart_records(heart_batch_size, current_time)
-            print(".......... HEART RATE.............")
-            print(records)
-            heart_random_rate = randint(0, 60)
-            # kinesis.put_records(StreamName=inputStream, Records=records)   # TODO change to kinesis stream name'
-
+       # print(records)
+        # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
         total = total + batch_size
-        print(total)
-        count = count+1
+       # print(total)
 
+        count = count+1
         if (count % 1000) == 1:
+            # for meal record
             records = generator.get_meal_record()
             print("................. MEAL RECORD.......................")
+            print(records)
+            # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
+            # for heart record
+            records = generator.get_heart_records(batch_size, current_time)
+            print(".......... HEART RATE.............")
+            print(sum)
             print(records)
             # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
         '#in seconds'
