@@ -60,9 +60,11 @@ class RecordGenerator(object):
 def main():
     kinesis = boto3.client('kinesis', aws_access_key_id=accessKeyId, aws_secret_access_key=secretAccessKey)
     generator = RecordGenerator()
-    batch_size = 3
+    batch_size = 5
     '#This was changed because of request for batch size of 100'
     count = 0
+    total = 0
+    sum = 0
     while True:
         "# records = generator.get_records(batch_size)"
         current_time = datetime.datetime.now()
@@ -70,13 +72,17 @@ def main():
         records = generator.get_gyro_records(batch_size, current_time)
         print(records)
        # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
-        records = generator.get_heart_records(batch_size, current_time)
-        print(records)
+        sum = sum + 1
+        if(sum % 20) == 1:
+                    records = generator.get_heart_records(batch_size, current_time)
+                    print(".......... HEART RATE.............")
+                    print(records)
         # kinesis.put_records(StreamName="test", Records=records)   # TODO change to kinesis stream name'
         records = generator.get_accelerometer_records(batch_size, current_time)
         print(records)
        # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
-
+        total = total + 5
+        print(total)
         count = count+1
 
         if (count % 1000) == 1:
