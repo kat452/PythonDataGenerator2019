@@ -60,7 +60,7 @@ class RecordGenerator(object):
 def main():
     kinesis = boto3.client('kinesis', aws_access_key_id=accessKeyId, aws_secret_access_key=secretAccessKey)
     generator = RecordGenerator()
-    batch_size = 5
+    batch_size = randint(1, 60)  #TODO get minimum and maximum batch size
     heart_batch_size = 3
     '#This was changed because of request for batch size of 100'
     count = 0
@@ -74,36 +74,47 @@ def main():
         current_time = datetime.datetime.now()
         """records = generator.get_passive_records(batch_size)"""
 
-        if (randint(0, 60) % 10) < 5:
-            records = generator.get_gyro_records(batch_size, current_time)
-            print(records)
-            records = generator.get_accelerometer_records(batch_size, current_time)
-            print(records)
-            # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
+
+        records = generator.get_gyro_records(batch_size, current_time)
+        #print(records)
+        records = generator.get_accelerometer_records(batch_size, current_time)
+        #print(records)
+        # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
 
         sum = sum + 1
-        if(sum % heart_random_rate) == 1:
+        '#at present if sum/(20) is taken and then a modulus applied to it comparing it to the random heart rate->' \
+        'basically this is weird math i though up while being slightly tired'
+        print(str(sum / (1/generation_per_second))+ " " + str(heart_random_rate))
+        if((sum / (1/generation_per_second)) % heart_random_rate) == 1:
+            current_time = datetime.datetime.now()
             records = generator.get_heart_records(heart_batch_size, current_time)
             print(".......... HEART RATE.............")
-            print(records)
             heart_random_rate = randint(0, 60)
+            '#This is basically setting it so at lease once evey minute generates heart rate'
+            print(records)
             # kinesis.put_records(StreamName=inputStream, Records=records)   # TODO change to kinesis stream name'
 
         total = total + batch_size
-        print(total)
+        #print(total)
         count = count+1
 
         if (count % 1000) == 1:
             records = generator.get_meal_record()
-            print("................. MEAL RECORD.......................")
-            print(records)
+            '#print("................. MEAL RECORD.......................")'
+            'print(records)'
             # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
         '#in seconds'
+        if (1 % generation_per_second) == 1 :
+            batch_size = randint(1, 60)
+
         time.sleep(generation_per_second)
         # TODO per second send 60 records
 
         '#TODO the combination of time.sleep and batch size will determine how many in a minute, '
         '#and how they are spaced out'
+
+
+
 
 
 if __name__ == "__main__":
