@@ -6,7 +6,7 @@ import config
 import jsonDictonaries
 '#modified from tutorial at https://docs.aws.amazon.com/kinesisanalytics/latest/dev/app-hotspots-prepare.html'
 from random import random
-
+from random import randint
 # Modify this section to reflect your AWS configuration.
 awsRegion = "us-east-1"  # The AWS region where your Kinesis Analytics application is configured.
 accessKeyId = config.accessKeyId  # Your AWS Access Key ID
@@ -61,27 +61,39 @@ def main():
     kinesis = boto3.client('kinesis', aws_access_key_id=accessKeyId, aws_secret_access_key=secretAccessKey)
     generator = RecordGenerator()
     batch_size = 5
+    heart_batch_size = 3
     '#This was changed because of request for batch size of 100'
     count = 0
     total = 0
     sum = 0
+    generation_per_second = .05
+
+    heart_random_rate = randint(0, 60)
     while True:
         "# records = generator.get_records(batch_size)"
         current_time = datetime.datetime.now()
         """records = generator.get_passive_records(batch_size)"""
-        records = generator.get_gyro_records(batch_size, current_time)
-        print(records)
+
+        if (randint(0, 60) % 10) <5:
+            records = generator.get_gyro_records(batch_size, current_time)
+            print(records)
+            records = generator.get_accelerometer_records(batch_size, current_time)
+            print(records)
+
+
+
        # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
         sum = sum + 1
-        if(sum % 20) == 1:
-                    records = generator.get_heart_records(batch_size, current_time)
-                    print(".......... HEART RATE.............")
-                    print(records)
+        if(sum % heartRandomRate) == 1:
+            records = generator.get_heart_records(heart_batch_size, current_time)
+            print(".......... HEART RATE.............")
+            print(records)
+            heart_random_rate = randint(0, 60)
+
         # kinesis.put_records(StreamName="test", Records=records)   # TODO change to kinesis stream name'
-        records = generator.get_accelerometer_records(batch_size, current_time)
-        print(records)
+
        # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
-        total = total + 5
+        total = total + batch_size
         print(total)
         count = count+1
 
@@ -91,9 +103,7 @@ def main():
             print(records)
             # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
         '#in seconds'
-        time.sleep(0.05)
-
-
+        time.sleep(generationPerSecoond)
         # TODO per second send 60 records
 
         '#TODO the combination of time.sleep and batch size will determine how many in a minute, '
