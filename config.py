@@ -1,2 +1,3 @@
-accessKeyId =  ""
+accessKeyId = ""
 secretAccessKey = ""
+streamName = "test"

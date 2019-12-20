@@ -11,7 +11,7 @@ from random import randint
 awsRegion = "us-east-1"  # The AWS region where your Kinesis Analytics application is configured.
 accessKeyId = config.accessKeyId  # Your AWS Access Key ID
 secretAccessKey = config.secretAccessKey  # Your AWS Secret Access Key
-inputStream = "test"
+inputStream = config.streamName
 
 
 class RecordGenerator(object):
@@ -74,25 +74,21 @@ def main():
         current_time = datetime.datetime.now()
         """records = generator.get_passive_records(batch_size)"""
 
-        if (randint(0, 60) % 10) <5:
+        if (randint(0, 60) % 10) < 5:
             records = generator.get_gyro_records(batch_size, current_time)
             print(records)
             records = generator.get_accelerometer_records(batch_size, current_time)
             print(records)
+            # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
 
-
-
-       # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
         sum = sum + 1
         if(sum % heart_random_rate) == 1:
             records = generator.get_heart_records(heart_batch_size, current_time)
             print(".......... HEART RATE.............")
             print(records)
             heart_random_rate = randint(0, 60)
+            # kinesis.put_records(StreamName=inputStream, Records=records)   # TODO change to kinesis stream name'
 
-        # kinesis.put_records(StreamName="test", Records=records)   # TODO change to kinesis stream name'
-
-       # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
         total = total + batch_size
         print(total)
         count = count+1
@@ -101,7 +97,7 @@ def main():
             records = generator.get_meal_record()
             print("................. MEAL RECORD.......................")
             print(records)
-            # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
+            # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
         '#in seconds'
         time.sleep(generation_per_second)
         # TODO per second send 60 records
