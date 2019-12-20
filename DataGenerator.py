@@ -60,7 +60,7 @@ class RecordGenerator(object):
 def main():
     kinesis = boto3.client('kinesis', aws_access_key_id=accessKeyId, aws_secret_access_key=secretAccessKey)
     generator = RecordGenerator()
-    batch_size = 1
+    batch_size = 3
     '#This was changed because of request for batch size of 100'
     count = 0
     while True:
@@ -85,7 +85,9 @@ def main():
             print(records)
             # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
         '#in seconds'
-        time.sleep(0.1)
+        time.sleep(0.05)
+
+
         # TODO per second send 60 records
 
         '#TODO the combination of time.sleep and batch size will determine how many in a minute, '
