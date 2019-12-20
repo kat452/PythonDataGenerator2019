@@ -69,8 +69,7 @@ def main():
     count = 0
     total = 0
     generation_per_second = .05
-    sum = 0
-    heart_count=0;
+    heart_count = 0
    # heart_random_rate = randint(0, 5)
     prev_time_batch_rate =datetime.datetime.now();
     prev_time_heart = datetime.datetime.now();
@@ -84,7 +83,14 @@ def main():
         # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
         total = total + batch_size
         # print(total)
-        count = count+1
+
+        if prev_time_heart + datetime.timedelta(minutes=1) < datetime.datetime.now():
+            prev_time_heart = datetime.datetime.now()
+            print(".......... HEART RATE.............")
+            records = generator.get_heart_records(batch_size, current_time)
+            print(records)
+            prev_time_heart = datetime.datetime.now()
+
         if (count % 1000) == 1:
             # for meal record
              records = generator.get_meal_record()
@@ -107,8 +113,9 @@ def main():
             batch_size = randint(1, 5)
             timex = datetime.datetime.now()
             print("batch size is  " + str(batch_size) + " at time " + str(timex))
+
         count = count + 1
-        heart_count = heart_count + 1
+
         time.sleep(generation_per_second)
         # TODO per second send 60 records
 
