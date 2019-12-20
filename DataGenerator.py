@@ -86,6 +86,8 @@ def main():
             # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
         '#in seconds'
         time.sleep(0.1)
+        # TODO per second send 60 records
+
         '#TODO the combination of time.sleep and batch size will determine how many in a minute, '
         '#and how they are spaced out'
 
