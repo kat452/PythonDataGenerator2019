@@ -13,7 +13,7 @@ from random import randint
 awsRegion = "us-east-1"  # The AWS region where your Kinesis Analytics application is configured.
 accessKeyId = config.accessKeyId  # Your AWS Access Key ID
 secretAccessKey = config.secretAccessKey  # Your AWS Secret Access Key
-inputStream = "test"
+inputStream = config.streamName
 
 
 class RecordGenerator(object):
@@ -79,7 +79,7 @@ def main():
         print(records)
         # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
         records = generator.get_accelerometer_records(batch_size, current_time)
-       # print(records)
+        # print(records)
         # kinesis.put_records(StreamName=inputStream, Records=records)    # TODO change to kinesis stream name'
         total = total + batch_size
         # print(total)
