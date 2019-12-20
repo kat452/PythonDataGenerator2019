@@ -84,7 +84,7 @@ def main():
 
        # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
         sum = sum + 1
-        if(sum % heartRandomRate) == 1:
+        if(sum % heart_random_rate) == 1:
             records = generator.get_heart_records(heart_batch_size, current_time)
             print(".......... HEART RATE.............")
             print(records)
@@ -103,7 +103,7 @@ def main():
             print(records)
             # kinesis.put_records(StreamName="test", Records=records)    # TODO change to kinesis stream name'
         '#in seconds'
-        time.sleep(generationPerSecoond)
+        time.sleep(generation_per_second)
         # TODO per second send 60 records
 
         '#TODO the combination of time.sleep and batch size will determine how many in a minute, '
