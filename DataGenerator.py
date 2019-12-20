@@ -69,7 +69,7 @@ def main():
 
     heart_random_rate = randint(0, 60)
     while True:
-
+# chnaged this
         current_time = datetime.datetime.now()
         # for gyroscope data
         records = generator.get_gyro_records(batch_size, current_time)
